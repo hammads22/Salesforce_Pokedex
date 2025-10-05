@@ -9,7 +9,7 @@
 1. Create a **Lightening Component Tab** with **Pokedex** component and add it to any of your lightening app.
 
 ## 🖼 Screenshot
-![Pokedex Screenshot](./screenshot.png)
+![Pokedex Screenshot](Pokedex.png)
 
 ## 🛠 Technologies
 - Salesforce Apex  
