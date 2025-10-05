@@ -1,0 +1,81 @@
+<template>
+    <lightning-card title="Pokémon Guidebook" icon-name="custom:custom63">
+        <!-- Search bar -->
+        <div class="search-container">
+            <lightning-input 
+                type="text" 
+                placeholder="Enter Pokémon name..."
+                value={searchKey} 
+                onchange={handleSearchChange}>
+            </lightning-input>
+            <lightning-button 
+                variant="brand" 
+                label="Search"
+                class="slds-m-left_small"
+                onclick={handleSearchClick}>
+            </lightning-button>
+        </div>
+
+        <!-- Spinner -->
+        <template if:true={isLoading}>
+            <lightning-spinner alternative-text="Loading Pokémon..." size="large"></lightning-spinner>
+        </template>
+
+        <!-- Error -->
+        <template if:true={error}>
+            <div class="error-message">
+                {error}
+            </div>
+        </template>
+
+        <!-- Pokémon Cards -->
+        <template if:true={filteredPokemon}>
+            <div class="grid-container">
+                <template for:each={filteredPokemon} for:item="poke">
+                    <div class="poke-card" key={poke.id}>
+                        <div class="card-inner">
+                            <!-- Front -->
+                            <div class="card-front">
+                                <img src={poke.image} alt={poke.name}/>
+                                <p class="poke-number">No. {poke.id}</p>
+                                <h3 class="poke-name">{poke.name}</h3>
+                            </div>
+                            <!-- Back -->
+                            <div class="card-back">
+                                <h4>Stats</h4>
+                                <table class="stats-table">
+                                    <tbody>
+                                        <template for:each={poke.stats} for:item="stat">
+                                            <tr key={stat.name}>
+                                                <td class="stat-name">{stat.name}</td>
+                                                <td class="stat-value">{stat.value}</td>
+                                            </tr>
+                                        </template>
+                                    </tbody>
+                                </table>
+                                <h4>Abilities</h4>
+                                <ul>
+                                    <template for:each={poke.abilities} for:item="ab">
+                                        <li key={ab}>{ab}</li>
+                                    </template>
+                                </ul>
+                                <p>Height: {poke.height}</p>
+                                <p>Weight: {poke.weight}</p>
+                            </div>
+                        </div>
+                    </div>
+                </template>
+            </div>
+        </template>
+
+        <!-- Pagination -->
+        <div class="pagination-container">
+            <lightning-button 
+                variant="brand" 
+                label="Load More" 
+                onclick={loadPokemonBatch}
+                disabled={isLoading}>
+            </lightning-button>
+        </div>
+    </lightning-card>
+</template>
